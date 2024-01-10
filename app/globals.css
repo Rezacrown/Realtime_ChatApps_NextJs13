@@ -2,7 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* primary color = #131116 */
+
+.btn-main {
+  @apply w-full flex items-center justify-center gap-2 rounded-lg bg-[#131116] px-8 py-3 text-center text-sm font-semibold text-white ring-[#131116] transition duration-100 hover:bg-[#0b0a0c] md:text-base;
+}
+
+.btn-signin {
+  @apply flex items-center justify-center gap-2 rounded-lg bg-[#131116] px-8 py-3 text-center text-sm font-semibold text-white ring-[#131116] transition duration-100 hover:bg-[#0b0a0c] md:text-base;
+}
+
+.btn-logout {
+  @apply flex items-center justify-center gap-2 rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white ring-red-300 transition duration-100 hover:bg-red-600 md:text-base;
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +38,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */

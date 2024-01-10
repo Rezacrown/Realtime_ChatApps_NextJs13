@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "show:db": "prisma studio"
+    "show:db": "prisma studio",
+    "tunnel": "lt --port 3000"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^0.4.4-canary.81",
@@ -26,6 +27,7 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
+    "localtunnel": "^2.0.2",
     "postcss": "^8",
     "prisma": "^5.7.1",
     "tailwindcss": "^3",
