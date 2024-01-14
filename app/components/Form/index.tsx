@@ -1,14 +1,22 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { postData } from "../../action";
 
 export default function Form() {
   const formRef = useRef<HTMLFormElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleForm = async (formData: FormData) => {
-    await postData(formData);
-    formRef.current?.reset();
+    try {
+      setIsLoading(true);
+      await postData(formData).then(() => {
+        setIsLoading(false);
+        formRef.current?.reset();
+      });
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -21,14 +29,16 @@ export default function Form() {
         <input
           type="text"
           name="message"
+          required
           placeholder="Type your message..."
           className="flex-grow py-2 px-4 outline-none"
         />
         <button
           type="submit"
+          disabled={isLoading}
           className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-full"
         >
-          Send
+          {isLoading ? "Loading..." : "Send"}
         </button>
       </div>
     </form>

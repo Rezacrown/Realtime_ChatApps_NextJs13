@@ -42,7 +42,18 @@ export default async function Chathomepage() {
   return (
     <>
       <div className="h-screen bg-gray-200 flex flex-col">
-        <ChatComponent data={data as any} />
+        <ChatComponent
+          data={
+            data as {
+              User: {
+                email: string | null;
+                image: string | null;
+                name: string | null;
+              };
+              message: string;
+            }[]
+          }
+        />
         <Form />
       </div>
     </>

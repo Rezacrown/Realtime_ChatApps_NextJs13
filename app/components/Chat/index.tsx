@@ -39,8 +39,9 @@ export default function ChatComponent2({ data }: iAppProps) {
     // binding data chanel pada event "hello"
     channel.bind("hello", (data: any) => {
       // Update state comments saat ada data baru
-      setTotalComments((prev) => [...prev, JSON.parse(data.message)]);
-      // (prev) => [...prev, JSON.parse(data.message)] karena itu array
+      const parsedComment = JSON.parse(data.message);
+      setTotalComments((prev) => [...prev, parsedComment]);
+      // setTotalComments(totalComments.push(parsedComment) as typeof data);
     });
 
     // Unsubscribe saat unmount agar nanti tidak duplikat message
@@ -61,54 +62,106 @@ export default function ChatComponent2({ data }: iAppProps) {
 
   // Render comments
   return (
-    <div className="p-6 flex-grow max-h-screen overflow-y-auto py-32">
-      <div className="flex flex-col gap-4">
-        {totalComments.map((message, index) => (
-          <div key={index} className="grid grid-cols-2">
-            {message.User.email == session.data?.user?.email ? (
-              <div className="columns-1">
-                <div className="flex items-center">
-                  <Image
-                    src={message.User.image as string}
-                    alt="Profile image of user"
-                    className="w-12 h-12 object-cover rounded-lg mr-4"
-                    width={50}
-                    height={50}
-                  />
-                  <div className="rounded-lg bg-white p-4 shadow-md self-start">
-                    {message.message}
-                  </div>
-                </div>
+    // <div className="p-6 flex-grow max-h-screen overflow-y-auto py-32">
+    //   <div className="flex flex-col gap-4">
+    //     {totalComments.map((message, index) => (
+    //       <>
+    //         <div key={index} className="">
+    //           {message.User.email == session.data?.user?.email && (
+    //             <>
+    //               <div className="flex items-center">
+    //                 <Image
+    //                   src={message.User.image as string}
+    //                   alt="Profile image of user"
+    //                   className="w-12 h-12 object-cover rounded-lg mr-4"
+    //                   width={50}
+    //                   height={50}
+    //                 />
+    //                 <div className="rounded-lg bg-white p-4 shadow-md self-start">
+    //                   {message.message}
+    //                 </div>
+    //               </div>
+    //               <p className="font-light text-sm text-gray-600">
+    //                 {message.User.name}
+    //               </p>
+    //             </>
+    //           )}
 
-                <p className="font-light text-sm text-gray-600">
+    //           {message.User.email != session.data?.user?.email && (
+    //             <>
+    //               <div className="flex items-center justify-self-end">
+    //                 <Image
+    //                   src={message.User.image as string}
+    //                   alt="Profile image of user"
+    //                   className="w-12 h-12 object-cover rounded-lg mr-4"
+    //                   width={50}
+    //                   height={50}
+    //                 />
+    //                 <div className="rounded-lg bg-white p-4 shadow-md self-start">
+    //                   {message.message}
+    //                 </div>
+    //               </div>
+    //               <p className="font-light text-sm text-gray-600">
+    //                 {message.User.name}
+    //               </p>
+    //             </>
+    //           )}
+    //         </div>
+    //       </>
+    //     ))}
+    //     <div ref={messageEndRef}></div>
+    //   </div>
+    // </div>
+    <>
+      <div className="p-6 flex-grow max-h-screen overflow-y-auto py-32">
+        <div className="flex flex-col gap-4">
+          {totalComments.map((message, index) => (
+            <>
+              <div
+                key={index}
+                className={`flex items-center ${
+                  message.User.email == session.data?.user?.email
+                    ? "justify-end"
+                    : "justify-start"
+                }`}
+              >
+                <Image
+                  src={message.User.image as string}
+                  alt="Profile image of user"
+                  className={`w-12 h-12 object-cover rounded-lg mr-4 ${
+                    message.User.email == session.data?.user?.email
+                      ? "rounded-full bg-blue-500"
+                      : "rounded-full bg-gray-200"
+                  }`}
+                  width={50}
+                  height={50}
+                />
+                <div
+                  className={`rounded-lg bg-white p-4 shadow-md ${
+                    message.User.email == session.data?.user?.email
+                      ? "bg-blue-200"
+                      : ""
+                  }`}
+                >
+                  {message.message}
+                </div>
+              </div>
+              <div
+                className={`flex items-center ${
+                  message.User.email == session.data?.user?.email
+                    ? "justify-end"
+                    : "justify-start"
+                }`}
+              >
+                <p className={`font-light text-sm text-gray-600 `}>
                   {message.User.name}
                 </p>
               </div>
-            ) : (
-              <div className="columns-2">
-                <div className="flex items-center">
-                  <Image
-                    src={message.User.image as string}
-                    alt="Profile image of user"
-                    className="w-12 h-12 object-cover rounded-lg mr-4"
-                    width={50}
-                    height={50}
-                  />
-                  <div className="rounded-lg bg-white p-4 shadow-md self-start">
-                    {message.message}
-                  </div>
-                </div>
-
-                <p className="font-light text-sm text-gray-600">
-                  {message.User.name}
-                </p>
-              </div>
-            )}
-          </div>
-        ))}
-
-        <div ref={messageEndRef}></div>
+            </>
+          ))}
+          <div ref={messageEndRef}></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
