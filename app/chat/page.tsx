@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../config/auth";
 import { redirect } from "next/navigation";
-// import Form from "../components/Form";
+import Form from "../components/Form";
 import { prisma } from "../config//db";
 import ChatComponent from "../components/Chat";
 
@@ -12,6 +12,8 @@ async function getData() {
       id: true,
       User: {
         select: {
+          // id: true,
+          email: true,
           name: true,
           image: true,
         },
@@ -33,14 +35,16 @@ export default async function Chathomepage() {
   const session = await getServerSession(authOptions);
   const data = await getData();
 
-  //   if (!session) {
-  //     redirect("/");
-  //   }
+  if (!session) {
+    redirect("/");
+  }
 
   return (
-    <div className="h-screen bg-gray-200 flex flex-col">
-      <ChatComponent data={data as any} />
-      {/* <Form /> */}
-    </div>
+    <>
+      <div className="h-screen bg-gray-200 flex flex-col">
+        <ChatComponent data={data as any} />
+        <Form />
+      </div>
+    </>
   );
 }

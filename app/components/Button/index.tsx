@@ -22,10 +22,15 @@ export function NavLogin() {
 }
 
 export function MainLogin() {
-  // Fungsi login ke Github dengan signIn
+  // Fungsi login ke github dengan signIn
   return (
-    <button onClick={() => signIn("github")} className="btn-main">
-      Login with Github
-    </button>
+    <>
+      <button onClick={() => signIn("github")} className="btn-main">
+        Login with Github
+      </button>
+      <button onClick={() => signIn("google")} className="btn-google  mt-5">
+        Login with Google
+      </button>
+    </>
   );
 }
